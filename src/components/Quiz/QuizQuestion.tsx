@@ -1,57 +1,38 @@
-interface QuizQuestionProps {
+type Option = { id: string; text: string };
+
+type QuizQuestionProps = {
   answer: string;
   handleChosenAnswer: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
+  question: {
+    id: string;
+    question: string;
+    options: Option[];
+    answer: string;
+  };
+};
 
-const QuizQuestion = ({ answer, handleChosenAnswer }: QuizQuestionProps) => {
+const QuizQuestion = ({
+  answer,
+  handleChosenAnswer,
+  question,
+}: QuizQuestionProps) => {
   return (
     <div>
-      <p>What is react?</p>
+      <p>{question.question}</p>
       <div>
-        <p className="bg-gray-400 p-2 my-2">
-          <input
-            type="radio"
-            id="a"
-            name="a"
-            value="a"
-            checked={answer === "a"}
-            onChange={handleChosenAnswer}
-          />
-          <label htmlFor="a1">A</label>
-        </p>
-        <p className="bg-gray-400 p-2 my-2">
-          <input
-            type="radio"
-            id="b"
-            name="b"
-            value="b"
-            checked={answer === "b"}
-            onChange={handleChosenAnswer}
-          />
-          <label htmlFor="b">B</label>
-        </p>
-        <p className="bg-gray-400 p-2 my-2">
-          <input
-            type="radio"
-            id="c"
-            name="c"
-            value="c"
-            checked={answer === "c"}
-            onChange={handleChosenAnswer}
-          />
-          <label htmlFor="c">C</label>
-        </p>
-        <p className="bg-gray-400 p-2 my-2">
-          <input
-            type="radio"
-            id="d"
-            name="d"
-            value="d"
-            checked={answer === "d"}
-            onChange={handleChosenAnswer}
-          />
-          <label htmlFor="d">D</label>
-        </p>
+        {question.options.map((option) => (
+          <p key={option.id} className="bg-gray-400 p-2 my-2 rounded">
+            <input
+              type="radio"
+              id={option.id}
+              name={option.id}
+              value={option.id}
+              checked={answer === option.id}
+              onChange={handleChosenAnswer}
+            />
+            <label htmlFor={option.id}>{option.text}</label>
+          </p>
+        ))}
       </div>
     </div>
   );
