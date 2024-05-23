@@ -1,50 +1,16 @@
 import { useState } from "react";
 import QuizHeader from "./QuizHeader";
 import QuizQuestion from "./QuizQuestion";
+import { QuizType } from "../../shared.types";
 
-const QUIZ = {
-  title: "ReactQuiz",
-  questions: [
-    {
-      id: "1",
-      question: "What is react?",
-      options: [
-        { id: "1", text: "Library" },
-        { id: "2", text: "Framework" },
-        { id: "3", text: "Language" },
-        { id: "4", text: "Compiler" },
-      ],
-      answer: "1",
-    },
-    {
-      id: "2",
-      question: "What is TypeScript?",
-      options: [
-        { id: "1", text: "Library" },
-        { id: "2", text: "Framework" },
-        { id: "3", text: "Language" },
-        { id: "4", text: "OS" },
-      ],
-      answer: "3",
-    },
-    {
-      id: "3",
-      question: "What is PHP?",
-      options: [
-        { id: "1", text: "Library" },
-        { id: "2", text: "Framework" },
-        { id: "3", text: "Language" },
-        { id: "4", text: "Shit" },
-      ],
-      answer: "3",
-    },
-  ],
+type QuizProps = {
+  activeQuiz: QuizType;
 };
 
-const Quiz = () => {
+const Quiz = ({ activeQuiz }: QuizProps) => {
   const [answer, setAnswer] = useState("");
   const [activeQuestionIdx, setActiveQuestionIdx] = useState(0);
-  const activeQuestion = QUIZ.questions[activeQuestionIdx];
+  const activeQuestion = activeQuiz.questions[activeQuestionIdx];
   const activeQuestionNumber = activeQuestionIdx + 1;
   const [correctAnswers, setCorrectAnswers] = useState(0);
 
@@ -60,15 +26,16 @@ const Quiz = () => {
 
   return (
     <div className="px-4">
-      {QUIZ.questions.length < activeQuestionNumber ? (
+      {activeQuiz.questions.length < activeQuestionNumber ? (
         <p className="text-3xl font-bold text-center">
-          Quiz is OVER! You got {correctAnswers} out of {QUIZ.questions.length}
+          Quiz is OVER! You got {correctAnswers} out of{" "}
+          {activeQuiz.questions.length}
         </p>
       ) : (
         <>
           <QuizHeader
-            quizTitle={QUIZ.title}
-            questionCount={QUIZ.questions.length}
+            quizTitle={activeQuiz.title}
+            questionCount={activeQuiz.questions.length}
             activeQuestionNumber={activeQuestionNumber}
           />
           <QuizQuestion

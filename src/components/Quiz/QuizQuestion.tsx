@@ -1,14 +1,9 @@
-type Option = { id: string; text: string };
+import { Question } from "../../shared.types";
 
 type QuizQuestionProps = {
   answer: string;
   handleChosenAnswer: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  question: {
-    id: string;
-    question: string;
-    options: Option[];
-    answer: string;
-  };
+  question: Question;
 };
 
 const QuizQuestion = ({
