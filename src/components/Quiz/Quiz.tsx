@@ -1,13 +1,16 @@
 import { useState } from "react";
+import { useAppSelector } from "../../hooks";
+import { Link, useParams } from "react-router-dom";
+import { QuizType } from "../../shared.types";
 import QuizHeader from "./QuizHeader";
 import QuizQuestion from "./QuizQuestion";
-import { QuizType } from "../../shared.types";
 
-type QuizProps = {
-  activeQuiz: QuizType;
-};
-
-const Quiz = ({ activeQuiz }: QuizProps) => {
+const Quiz = () => {
+  const params = useParams();
+  const quizes = useAppSelector((state) => state.quizes.quizes);
+  const activeQuiz = quizes.find(
+    (quiz: QuizType) => quiz.title === params.quizId
+  );
   const [answer, setAnswer] = useState("");
   const [activeQuestionIdx, setActiveQuestionIdx] = useState(0);
   const activeQuestion = activeQuiz.questions[activeQuestionIdx];
@@ -27,10 +30,15 @@ const Quiz = ({ activeQuiz }: QuizProps) => {
   return (
     <div className="px-4">
       {activeQuiz.questions.length < activeQuestionNumber ? (
-        <p className="text-3xl font-bold text-center">
-          Quiz is OVER! You got {correctAnswers} out of{" "}
-          {activeQuiz.questions.length}
-        </p>
+        <div>
+          <p className="text-3xl font-bold text-center">
+            Quiz is OVER! You got {correctAnswers} out of{" "}
+            {activeQuiz.questions.length}
+          </p>
+          <p>
+            <Link to="/">Go back</Link>
+          </p>
+        </div>
       ) : (
         <>
           <QuizHeader

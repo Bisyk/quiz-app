@@ -1,11 +1,97 @@
-import { Question } from "../../shared.types";
+import { Link } from "react-router-dom";
+import { useAppSelector } from "../../hooks";
+import { QuizType } from "../../shared.types";
+import { useEffect } from "react";
 
-type HomeProps = {
-  quizes: { title: string; questions: Question[] }[];
-  onQuizSelect: (title: string) => void;
-};
+const Home = () => {
+  useEffect(() => {
+    localStorage.setItem(
+      "quizes",
+      JSON.stringify([
+        {
+          title: "ReactQuiz",
+          questions: [
+            {
+              id: "1",
+              question: "What is react?",
+              options: [
+                { id: "1", text: "Library" },
+                { id: "2", text: "Framework" },
+                { id: "3", text: "Language" },
+                { id: "4", text: "Compiler" },
+              ],
+              answer: "1",
+            },
+            {
+              id: "2",
+              question: "What is TypeScript?",
+              options: [
+                { id: "1", text: "Library" },
+                { id: "2", text: "Framework" },
+                { id: "3", text: "Language" },
+                { id: "4", text: "OS" },
+              ],
+              answer: "3",
+            },
+            {
+              id: "3",
+              question: "What is PHP?",
+              options: [
+                { id: "1", text: "Library" },
+                { id: "2", text: "Framework" },
+                { id: "3", text: "Language" },
+                { id: "4", text: "Shit" },
+              ],
+              answer: "3",
+            },
+          ],
+        },
+        {
+          title: "ReactQuiz2",
+          questions: [
+            {
+              id: "1",
+              question: "What is react2?",
+              options: [
+                { id: "1", text: "Library" },
+                { id: "2", text: "Framework" },
+                { id: "3", text: "Language" },
+                { id: "4", text: "Compiler" },
+              ],
+              answer: "1",
+            },
+            {
+              id: "2",
+              question: "What is TypeScript?2",
+              options: [
+                { id: "1", text: "Library" },
+                { id: "2", text: "Framework" },
+                { id: "3", text: "Language" },
+                { id: "4", text: "OS" },
+              ],
+              answer: "3",
+            },
+            {
+              id: "3",
+              question: "What is PHP?",
+              options: [
+                { id: "1", text: "Library" },
+                { id: "2", text: "Framework" },
+                { id: "3", text: "Language" },
+                { id: "4", text: "Shit" },
+              ],
+              answer: "3",
+            },
+          ],
+        },
+      ])
+    );
+  });
 
-const Home = ({ quizes, onQuizSelect }: HomeProps) => {
+  const quizes = useAppSelector((state) => state.quizes.quizes);
+
+  console.log(quizes);
+
   return (
     <div>
       <p className="flex justify-between items-center px-4 mt-2 mb-2">
@@ -14,14 +100,15 @@ const Home = ({ quizes, onQuizSelect }: HomeProps) => {
       </p>
       <hr></hr>
       <div>
-        {quizes.map((quiz) => (
-          <div
-            key={quiz.title}
-            className="p-4"
-            onClick={() => onQuizSelect(quiz.title)}
-          >
-            <h2>{quiz.title}</h2>
-          </div>
+        {quizes.map((quiz: QuizType) => (
+          <Link to={`/quiz/${quiz.title}`} key={quiz.title}>
+            <div
+              key={quiz.title}
+              className="p-4 mx-4 border border-gray-400 rounded-xl my-2 cursor-pointer hover:bg-slate-200 duration-300"
+            >
+              <h2>{quiz.title}</h2>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
