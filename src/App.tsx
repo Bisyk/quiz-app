@@ -1,5 +1,11 @@
+import Quiz from "./components/Quiz";
+
 const App = () => {
-  return <div>Hello World!</div>;
+  return (
+    <div>
+      <Quiz />
+    </div>
+  );
 };
 
 export default App;
