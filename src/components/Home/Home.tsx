@@ -1,102 +1,17 @@
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../hooks";
 import { QuizType } from "../../shared.types";
-import { useEffect } from "react";
 
 const Home = () => {
-  useEffect(() => {
-    localStorage.setItem(
-      "quizes",
-      JSON.stringify([
-        {
-          title: "ReactQuiz",
-          questions: [
-            {
-              id: "1",
-              question: "What is react?",
-              options: [
-                { id: "1", text: "Library" },
-                { id: "2", text: "Framework" },
-                { id: "3", text: "Language" },
-                { id: "4", text: "Compiler" },
-              ],
-              answer: "1",
-            },
-            {
-              id: "2",
-              question: "What is TypeScript?",
-              options: [
-                { id: "1", text: "Library" },
-                { id: "2", text: "Framework" },
-                { id: "3", text: "Language" },
-                { id: "4", text: "OS" },
-              ],
-              answer: "3",
-            },
-            {
-              id: "3",
-              question: "What is PHP?",
-              options: [
-                { id: "1", text: "Library" },
-                { id: "2", text: "Framework" },
-                { id: "3", text: "Language" },
-                { id: "4", text: "Shit" },
-              ],
-              answer: "3",
-            },
-          ],
-        },
-        {
-          title: "ReactQuiz2",
-          questions: [
-            {
-              id: "1",
-              question: "What is react2?",
-              options: [
-                { id: "1", text: "Library" },
-                { id: "2", text: "Framework" },
-                { id: "3", text: "Language" },
-                { id: "4", text: "Compiler" },
-              ],
-              answer: "1",
-            },
-            {
-              id: "2",
-              question: "What is TypeScript?2",
-              options: [
-                { id: "1", text: "Library" },
-                { id: "2", text: "Framework" },
-                { id: "3", text: "Language" },
-                { id: "4", text: "OS" },
-              ],
-              answer: "3",
-            },
-            {
-              id: "3",
-              question: "What is PHP?",
-              options: [
-                { id: "1", text: "Library" },
-                { id: "2", text: "Framework" },
-                { id: "3", text: "Language" },
-                { id: "4", text: "Shit" },
-              ],
-              answer: "3",
-            },
-          ],
-        },
-      ])
-    );
-  });
-
   const quizes = useAppSelector((state) => state.quizes.quizes);
-
-  console.log(quizes);
 
   return (
     <div>
       <p className="flex justify-between items-center px-4 mt-2 mb-2">
         My Quizes
-        <button className="bg-blue-400 px-4 py-2 rounded-xl">New Quiz</button>
+        <Link to="/quiz/new">
+          <button className="bg-blue-400 px-4 py-2 rounded-xl">New Quiz</button>
+        </Link>
       </p>
       <hr></hr>
       <div>

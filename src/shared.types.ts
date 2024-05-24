@@ -4,7 +4,7 @@ export type Question = {
   id: string;
   question: string;
   options: Option[];
-  answer: string;
+  correctOptionId: string;
 };
 
 export interface QuizType {

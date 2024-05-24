@@ -23,7 +23,8 @@ const Quiz = () => {
 
   const handleSetActiveQuestionIdx = () => {
     setActiveQuestionIdx((prev) => prev + 1);
-    if (answer === activeQuestion.answer) setCorrectAnswers((prev) => prev + 1);
+    if (answer === activeQuestion.correctOptionId)
+      setCorrectAnswers((prev) => prev + 1);
     setAnswer("");
   };
 
@@ -35,7 +36,7 @@ const Quiz = () => {
             Quiz is OVER! You got {correctAnswers} out of{" "}
             {activeQuiz.questions.length}
           </p>
-          <p>
+          <p className="text-center">
             <Link to="/">Go back</Link>
           </p>
         </div>
