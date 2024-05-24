@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { QuizType } from "../../shared.types";
+import { quizesActions } from "../../redux/quizes-slice";
 
 const Home = () => {
+  const dispatch = useAppDispatch();
   const quizes = useAppSelector((state) => state.quizes.quizes);
+
+  const handleDeleteQuiz = (title: string) => {
+    dispatch(quizesActions.deleteQuiz({ title: title }));
+  };
 
   return (
     <div>
@@ -16,14 +22,21 @@ const Home = () => {
       <hr></hr>
       <div>
         {quizes.map((quiz: QuizType) => (
-          <Link to={`/quiz/${quiz.title}`} key={quiz.title}>
-            <div
-              key={quiz.title}
-              className="p-4 mx-4 border border-gray-400 rounded-xl my-2 cursor-pointer hover:bg-slate-200 duration-300"
-            >
-              <h2>{quiz.title}</h2>
+          <div className="flex w-full px-2" key={quiz.title}>
+            <div className="w-[90%]">
+              <div className="flex justify-between p-4 mr-2 border border-gray-400 rounded-xl my-2 cursor-pointer hover:bg-slate-200 duration-300">
+                <Link to={`/quiz/${quiz.title}`} key={quiz.title}>
+                  <h2>{quiz.title}</h2>
+                </Link>
+              </div>
             </div>
-          </Link>
+            <div className="flex gap-4">
+              <button className="text-blue-400 font-semibold">Edit</button>
+              <button onClick={() => handleDeleteQuiz(quiz.title)} className="text-rose-400 font-semibold">
+                Delete
+              </button>
+            </div>
+          </div>
         ))}
       </div>
     </div>
