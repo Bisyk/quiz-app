@@ -20,6 +20,15 @@ const quizesSlice = createSlice({
       );
       localStorage.setItem("quizes", JSON.stringify(state.quizes));
     },
+    updateQuiz: (state, action) => {
+      const index = state.quizes.findIndex(
+        (quiz: QuizType) => quiz.title === action.payload.title
+      );
+      if (index !== -1) {
+        state.quizes[index] = action.payload;
+        localStorage.setItem("quizes", JSON.stringify(state.quizes));
+      }
+    },
   },
 });
 
