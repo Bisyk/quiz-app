@@ -16,7 +16,7 @@ const Quiz = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const activeQuestion = activeQuiz.questions[activeQuestionIdx];
   const activeQuestionNumber = activeQuestionIdx + 1;
-  const initialTimer = 5;
+  const initialTimer = 30;
   const [timer, setTimer] = useState(initialTimer);
 
   const handleChosenAnswer = (event: React.ChangeEvent<HTMLInputElement>) => {
