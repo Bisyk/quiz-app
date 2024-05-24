@@ -49,7 +49,9 @@ const Home = () => {
           ))
         ) : (
           <div className="flex flex-col items-center mt-20 gap-5">
-            <p className="text-3xl">No quizes found. Please create a new one!</p>
+            <p className="text-3xl text-center">
+              No quizes found. Please create a new one!
+            </p>
             <p>
               <Link to="/quiz/new">
                 <button className="bg-blue-400 px-4 py-2 rounded-xl">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../../hooks";
 import { Link, useParams } from "react-router-dom";
 import { QuizType } from "../../shared.types";
@@ -13,9 +13,11 @@ const Quiz = () => {
   );
   const [answer, setAnswer] = useState("");
   const [activeQuestionIdx, setActiveQuestionIdx] = useState(0);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
   const activeQuestion = activeQuiz.questions[activeQuestionIdx];
   const activeQuestionNumber = activeQuestionIdx + 1;
-  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const initialTimer = 5;
+  const [timer, setTimer] = useState(initialTimer);
 
   const handleChosenAnswer = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAnswer(event.target.value);
@@ -23,10 +25,37 @@ const Quiz = () => {
 
   const handleSetActiveQuestionIdx = () => {
     setActiveQuestionIdx((prev) => prev + 1);
-    if (answer === activeQuestion.correctOptionId)
+    if (answer && answer === activeQuestion.correctOptionId) {
       setCorrectAnswers((prev) => prev + 1);
+    }
+    setTimer(initialTimer);
     setAnswer("");
   };
+
+  useEffect(() => {
+    if (!activeQuiz) return;
+
+    if (activeQuestionNumber > activeQuiz.questions.length) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setTimer((prevTimer) => {
+        if (prevTimer === 1) {
+          if (answer === "") {
+            setActiveQuestionIdx((prev) => prev + 1);
+            setTimer(initialTimer);
+          } else {
+            handleSetActiveQuestionIdx();
+          }
+          return initialTimer;
+        }
+        return prevTimer - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [activeQuestionIdx, activeQuiz, answer]);
 
   return (
     <div className="px-4">
@@ -63,6 +92,9 @@ const Quiz = () => {
           >
             Next
           </button>
+          <div className="fixed bottom-4 right-4 bg-white p-2 border-2 border-stone-500 rounded-xl">
+            Time left: {timer} seconds
+          </div>
         </>
       )}
     </div>
